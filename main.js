@@ -131,51 +131,84 @@ businesses.forEach(business => {
 });
 
 // Array to contain all the New York businesses
-const newYorkBusinesses = businesses.filter(business => {
-    let inNewYork = false
+// const newYorkBusinesses = businesses.filter(business => {
+//     let inNewYork = false
 
-    if (business.addressStateCode === "NY") {
-        inNewYork = true
-    }
+//     if (business.addressStateCode === "NY") {
+//         inNewYork = true
+//     }
 
-    return inNewYork
-})
-console.log(newYorkBusinesses)
+//     return inNewYork
+// })
+// console.log(newYorkBusinesses)
 
 // array to contain all the businesses in the manufacturing buisness
 
-const manufacturingBusinesses = businesses.filter(business => {
-    let manufactureCategory = false
-    if (business.companyIndustry === "Manufacturing") {
-        return true
-    }
-    return manufactureCategory
-})
+// const manufacturingBusinesses = businesses.filter(business => {
+//     let manufactureCategory = false
+//     if (business.companyIndustry === "Manufacturing") {
+//         return true
+//     }
+//     return manufactureCategory
+// })
 // better way to code this
 // const manufacturingBusinesses2 = businesses.filter(business => business.companyIndustry === "Manufacturing")
 
 // console.log(manufacturingBusinesses)
 // // render to DOM function
-const filteredContainer = document.querySelector("#filteredOutput")
+// const filteredContainer = document.querySelector("#filteredOutput")
 
-// HTML rep function 
-const createHTML = (business) => {
-    return `  
-    <h2>${business.companyName}</h2>
-    <section>
-      ${business.addressFullStreet}
-    </section>
-    <section>${business.addressCity}, ${business["addressStateCode"]} ${business[propertyZipValue]}
-    </section>  
-    `
-}
+// // HTML rep function 
+// const createHTML = (business) => {
+//     return `  
+//     <h2>${business.companyName}</h2>
+//     <section>
+//       ${business.addressFullStreet}
+//     </section>
+//     <section>${business.addressCity}, ${business["addressStateCode"]} ${business[propertyZipValue]}
+//     </section>  
+//     `
+// }
 
-const renderToDom = (businesses) => {
-    businesses.forEach((business) => {
-        filteredContainer.innerHTML += createHTML(business)
-    })
-}
-renderToDom(manufacturingBusinesses)
+// const renderToDom = (businesses) => {
+//     businesses.forEach((business) => {
+//         filteredContainer.innerHTML += createHTML(business)
+//     })
+// }
+// renderToDom(manufacturingBusinesses)
+
+// code for map method
+outEl.innerHTML += "<h1>Purchasing Agents</h1>";
+
+/*
+    Using map(), you extract the purchasing agent object
+    from each business and store it in a new array
+*/
+const agents = businesses.map(business => {
+    return business.purchasingAgent
+})
+
+console.table(agents)
+
+agents.forEach(agent => {
+    outEl.innerHTML += `<h2>${agent.nameFirst} ${agent.nameLast}</h2>`;
+    outEl.innerHTML += "<hr/>";
+});
+
+// return a new object that has the full name, company name, and phone number
+
+const createAgentObject = (agent) => ({
+    "fullName": `${agent.purchasingAgent.nameFirst} ${agent.purchasingAgent.nameLast}`,
+    "company": `${agent.companyName}`,
+    "phoneNumber": `${agent.phoneWork}`
+})
+
+// refactored map method to call the html factory function
+const agentObjectList = businesses.map(agent => createAgentObject(agent))
+
+
+console.log('agentObjectList: ', agentObjectList);
+
 
 
 
