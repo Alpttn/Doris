@@ -210,31 +210,70 @@ const agentObjectList = businesses.map(agent => createAgentObject(agent))
 console.log('agentObjectList: ', agentObjectList);
 
 // use find to get a specific company name
+// document
+// .querySelector("#companySearch")
+// .addEventListener("keypress", keyPressEvent => {
+//     if (keyPressEvent.charCode === 13) {
+//         /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS also made a method to make everything lowercase*/
+//         const lc = keyPressEvent.target.value.toLowerCase()
+//         const foundBusiness = businesses.find(
+//             business => {
+//                 const lowerCase = business.companyName.toLowerCase()
+//                 return lowerCase.includes(lc)
+
+//             });
+//         if (foundBusiness !== undefined) {
+//             return outEl.innerHTML = `
+//                 <h2>
+//                 ${foundBusiness.companyName}
+//                 </h2>
+//                 <section>
+//                 ${foundBusiness.addressFullStreet}
+
+//                 </section>
+//                 <section>
+//                 ${foundBusiness.addressCity},
+//                 ${foundBusiness.addressStateCode}
+//                 ${foundBusiness.addressZipCode}
+//                 </section>
+//             `;
+//         } else {
+//             alert("OOPS! Please search for a valid company")
+//         }
+
+//     }
+// });
+
+// refactored code for user to input purchasing agent name
 document
     .querySelector("#companySearch")
     .addEventListener("keypress", keyPressEvent => {
         if (keyPressEvent.charCode === 13) {
             /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS also made a method to make everything lowercase*/
             const lc = keyPressEvent.target.value.toLowerCase()
-            const foundBusiness = businesses.find(
+            const foundAgent = businesses.find(
                 business => {
-                    const lowerCase = business.companyName.toLowerCase()
-                    return lowerCase.includes(lc)
-
+                    const FirstNamelowerCase = business.purchasingAgent.nameFirst.toLowerCase()
+                    const LastNamelowerCase = business.purchasingAgent.nameLast.toLowerCase()
+                    if (FirstNamelowerCase.includes(lc)) {
+                        return FirstNamelowerCase.includes(lc)
+                    } else if (LastNamelowerCase.includes(lc)) {
+                        return LastNamelowerCase.includes(lc)
+                    }
                 });
-            if(foundBusiness !== undefined) {
+            if (foundAgent !== undefined) {
                 return outEl.innerHTML = `
                     <h2>
-                    ${foundBusiness.companyName}
+                    ${foundAgent.purchasingAgent.nameFirst}
                     </h2>
                     <section>
-                    ${foundBusiness.addressFullStreet}
+                    ${foundAgent.addressFullStreet}
     
                     </section>
                     <section>
-                    ${foundBusiness.addressCity},
-                    ${foundBusiness.addressStateCode}
-                    ${foundBusiness.addressZipCode}
+                    ${foundAgent.addressCity},
+                    ${foundAgent.addressStateCode}
+                    ${foundAgent.addressZipCode}
                     </section>
                 `;
             } else {
