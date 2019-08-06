@@ -209,6 +209,40 @@ const agentObjectList = businesses.map(agent => createAgentObject(agent))
 
 console.log('agentObjectList: ', agentObjectList);
 
+// use find to get a specific company name
+document
+    .querySelector("#companySearch")
+    .addEventListener("keypress", keyPressEvent => {
+        if (keyPressEvent.charCode === 13) {
+            /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS also made a method to make everything lowercase*/
+            const lc = keyPressEvent.target.value.toLowerCase()
+            const foundBusiness = businesses.find(
+                business => {
+                    const lowerCase = business.companyName.toLowerCase()
+                    return lowerCase.includes(lc)
+
+                });
+            if(foundBusiness !== undefined) {
+                return outEl.innerHTML = `
+                    <h2>
+                    ${foundBusiness.companyName}
+                    </h2>
+                    <section>
+                    ${foundBusiness.addressFullStreet}
+    
+                    </section>
+                    <section>
+                    ${foundBusiness.addressCity},
+                    ${foundBusiness.addressStateCode}
+                    ${foundBusiness.addressZipCode}
+                    </section>
+                `;
+            } else {
+                alert("OOPS! Please search for a valid company")
+            }
+
+        }
+    });
 
 
 
